@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>電子名刺 - 幸 隆志</title>
+    <!-- ブラウザ内で直接QRコードを描画する信頼性の高いライブラリ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <style>
         body {
             font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
@@ -42,19 +44,15 @@
         .content {
             padding: 25px 20px;
         }
-        
-        /* ▼▼▼ 追加：ロゴ用スタイリング ▼▼▼ */
         .logo-container {
             text-align: center;
             margin-bottom: 15px;
         }
         .logo-img {
-            max-width: 180px;  /* ロゴの最大幅 */
-            max-height: 60px;  /* ロゴの最大高さ */
+            max-width: 180px;
+            max-height: 60px;
             object-fit: contain;
         }
-        /* ▲▲▲ 追加ここまで ▲▲▲ */
-
         .company {
             font-weight: bold;
             color: #333;
@@ -97,10 +95,11 @@
             color: #666;
             margin-bottom: 12px;
         }
-        .qr-image {
+        #qr-code {
             width: 150px;
             height: 150px;
             margin: 0 auto;
+            display: block;
         }
         .btn-save {
             display: block;
@@ -138,12 +137,10 @@
     </div>
     <div class="content">
         
-        <!-- ▼▼▼ 追加：ロゴ表示エリア ▼▼▼ -->
         <div class="logo-container">
-            <!-- ★ここにご自身のロゴ画像のファイル名やURLを指定します★ -->
-            <img src="logo.png" alt="株式会社ウイズ・ワン ロゴ" class="logo-img">
+            <!-- logo.png が無いときは何も表示しない設計 -->
+            <img src="logo.png" alt="株式会社ウイズ・ワン ロゴ" class="logo-img" onerror="this.style.display='none'">
         </div>
-        <!-- ▲▲▲ 追加ここまで ▲▲▲ -->
 
         <div class="company">株式会社ウイズ・ワン (WISS1)</div>
         <div class="department">経営管理本部<br>代表取締役専務 本部長 / Chief Operating Officer</div>
@@ -171,7 +168,8 @@
 
         <div class="qr-container">
             <p>スマホのカメラで読み取ると連絡先に保存できます</p>
-            <img class="qr-image" id="qr-code-img" alt="連絡先QRコード" />
+            <!-- キャンバス（直接描画用） -->
+            <canvas id="qr-code"></canvas>
         </div>
 
         <a href="#" id="download-vcard" class="btn-save">連絡先アプリに保存 (vCardダウンロード)</a>
@@ -179,6 +177,7 @@
 </div>
 
 <script>
+    // vCard（連絡先）データ
     const vcardData = `BEGIN:VCARD
 VERSION:3.0
 N:幸;隆志;;;
@@ -192,9 +191,19 @@ EMAIL;TYPE=PREF,INTERNET:yuki@wiss1.co.jp
 URL:http://www.wiss1.co.jp
 END:VCARD`;
 
-    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(vcardData)}`;
-    document.getElementById('qr-code-img').src = qrApiUrl;
+    // 画面上で直接QRコードを描画
+    try {
+        new QRious({
+            element: document.getElementById('qr-code'),
+            value: vcardData,
+            size: 150,
+            level: 'M'
+        });
+    } catch (e) {
+        console.error("QR描画エラー:", e);
+    }
 
+    // ワンタップ保存ボタンの設定
     const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const downloadLink = document.getElementById('download-vcard');
