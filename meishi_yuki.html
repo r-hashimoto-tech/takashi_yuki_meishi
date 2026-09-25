@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電子名刺 - 幸 隆志</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            overflow: hidden;
+        }
+        .header {
+            background: #004098;
+            color: #fff;
+            padding: 25px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+            letter-spacing: 2px;
+        }
+        .header p {
+            margin: 5px 0 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 25px 20px;
+        }
+        
+        /* ▼▼▼ 追加：ロゴ用スタイリング ▼▼▼ */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .logo-img {
+            max-width: 180px;  /* ロゴの最大幅 */
+            max-height: 60px;  /* ロゴの最大高さ */
+            object-fit: contain;
+        }
+        /* ▲▲▲ 追加ここまで ▲▲▲ */
+
+        .company {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        .department {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        .info-item {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #444;
+        }
+        .info-item span.icon {
+            min-width: 65px;
+            width: 65px;
+            font-weight: bold;
+            color: #004098;
+            flex-shrink: 0;
+        }
+        .info-item span.text {
+            flex: 1;
+            line-height: 1.5;
+            word-break: break-all;
+        }
+        .qr-container {
+            text-align: center;
+            margin: 25px 0 15px;
+            padding-top: 20px;
+            border-top: 1px dashed #ccc;
+        }
+        .qr-container p {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        .qr-image {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+        }
+        .btn-save {
+            display: block;
+            width: 100%;
+            background: #004098;
+            color: #fff;
+            text-align: center;
+            padding: 14px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.3s;
+            box-sizing: border-box;
+            margin-top: 10px;
+        }
+        .btn-save:hover {
+            background: #002d6b;
+        }
+        a {
+            color: #004098;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="header">
+        <h1>幸 隆志</h1>
+        <p>Takashi Yuki</p>
+    </div>
+    <div class="content">
+        
+        <!-- ▼▼▼ 追加：ロゴ表示エリア ▼▼▼ -->
+        <div class="logo-container">
+            <!-- ★ここにご自身のロゴ画像のファイル名やURLを指定します★ -->
+            <img src="logo.png" alt="株式会社ウイズ・ワン ロゴ" class="logo-img">
+        </div>
+        <!-- ▲▲▲ 追加ここまで ▲▲▲ -->
+
+        <div class="company">株式会社ウイズ・ワン (WISS1)</div>
+        <div class="department">経営管理本部<br>代表取締役専務 本部長 / Chief Operating Officer</div>
+
+        <div class="info-item">
+            <span class="icon">〒</span>
+            <span class="text">103-0011<br>東京都中央区日本橋大伝馬町6番8号<br>PMO日本橋大伝馬町3F</span>
+        </div>
+        <div class="info-item">
+            <span class="icon">TEL</span>
+            <span class="text"><a href="tel:0356236711">03-5623-6711</a></span>
+        </div>
+        <div class="info-item">
+            <span class="icon">FAX</span>
+            <span class="text">03-5623-6712</span>
+        </div>
+        <div class="info-item">
+            <span class="icon">Email</span>
+            <span class="text"><a href="mailto:yuki@wiss1.co.jp">yuki@wiss1.co.jp</a></span>
+        </div>
+        <div class="info-item">
+            <span class="icon">URL</span>
+            <span class="text"><a href="http://www.wiss1.co.jp" target="_blank">www.wiss1.co.jp</a></span>
+        </div>
+
+        <div class="qr-container">
+            <p>スマホのカメラで読み取ると連絡先に保存できます</p>
+            <img class="qr-image" id="qr-code-img" alt="連絡先QRコード" />
+        </div>
+
+        <a href="#" id="download-vcard" class="btn-save">連絡先アプリに保存 (vCardダウンロード)</a>
+    </div>
+</div>
+
+<script>
+    const vcardData = `BEGIN:VCARD
+VERSION:3.0
+N:幸;隆志;;;
+FN:幸 隆志 (Takashi Yuki)
+ORG:株式会社ウイズ・ワン
+TITLE:代表取締役専務 本部長
+TEL;TYPE=WORK,VOICE:03-5623-6711
+TEL;TYPE=WORK,FAX:03-5623-6712
+ADR;TYPE=WORK:;;日本橋大伝馬町6番8号 PMO日本橋大伝馬町3F;中央区;東京都;103-0011;日本
+EMAIL;TYPE=PREF,INTERNET:yuki@wiss1.co.jp
+URL:http://www.wiss1.co.jp
+END:VCARD`;
+
+    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(vcardData)}`;
+    document.getElementById('qr-code-img').src = qrApiUrl;
+
+    const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const downloadLink = document.getElementById('download-vcard');
+    downloadLink.href = url;
+    downloadLink.download = 'Takashi_Yuki_WISS1.vcf';
+</script>
+
+</body>
+</html>
